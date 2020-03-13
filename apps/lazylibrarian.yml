@@ -15,7 +15,7 @@
         pgrole: 'lazylibrarian'
         intport: '5299'
         extport: '5299'
-        image: 'linuxserver/lazylibrarian:latest'
+        image: 'thraxis/lazylibrarian-calibre'
 
     # CORE (MANDATORY) ############################################################
     - name: 'Including cron job'
@@ -51,6 +51,8 @@
           - '{{path.stdout}}:{{path.stdout}}'
           - '/mnt:/mnt'
           - '/opt/appdata/{{pgrole}}:/config'
+          - '/mnt/unionfs/ebooks:/books'
+          - '/mnt/unionfs/abooks:/audiobooks'
 
     - name: 'Setting PG ENV'
       set_fact:
@@ -75,5 +77,3 @@
               - '{{pgrole}}'
         state: started
         labels: '{{pg_labels}}'
-
-    # CONFIGURATION ####################################################
